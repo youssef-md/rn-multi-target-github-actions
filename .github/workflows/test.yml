@@ -1,6 +1,6 @@
 name: Build Android on debug mode
 on:
-  push:
+  pull_request:
     branches: [main]
 
   # Enable manual trigger
@@ -21,11 +21,11 @@ jobs:
       - name: Build Android debug
         run: cd android && ./gradlew assembleRelease
 
-      - name: Upload apk
-        uses: actions/upload-artifact@v1
-        with:
-          name: android-debug
-          path: android/app/build/outputs/apk/release/app-release.apk
+      # - name: Upload apk
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: ${{ github.event.pull_request.title }}
+      #     path: android/app/build/outputs/apk/release/app-release.apk
 
       - name: Create release
         uses: 'marvinpinto/action-automatic-releases@latest'
@@ -33,5 +33,5 @@ jobs:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: 'latest'
           prerelease: false
-          title: 'Automatic Release-Candidate release'
+          title: 'Nova versão: ${{ github.event.pull_request.title }}'
           files: android/app/build/outputs/apk/release/app-release.apk
