@@ -31,7 +31,7 @@ jobs:
         uses: 'marvinpinto/action-automatic-releases@latest'
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: 'latest'
+          automatic_release_tag: '${{ github.event.pull_request.title }}'
           prerelease: false
           title: 'Nova versão: ${{ github.event.pull_request.title }}'
           files: android/app/build/outputs/apk/release/app-release.apk
